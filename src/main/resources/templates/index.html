@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h1>Home Page</h1>
+<h3>Upload Your File:</h3>
+<form method="POST" enctype="multipart/form-data" id="fileForm">
+	<table> 
+		<tr>
+   			<td>File: </td><td><input type="file" name="file"/></td>
+		</tr>
+		<tr>
+  			<td>File Creation Time: </td><td><input type="date" name="creationTime"/></td>
+		</tr>
+	</table> 
+	<br/> 
+    <input type="submit" value="Submit" id="submitForm"/>
+</form>
+
+<pre>
+    <span id="result"></span>
+</pre>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    $("#submitForm").click(function (event) {
+    	event.preventDefault();
+        ajax_submit();
+    });
+});
+
+function ajax_submit() {
+    var form = $('#fileForm')[0];
+    var data = new FormData(form);
+
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "/upload",
+        data: data,
+        processData: false, 
+        contentType: false,
+        cache: false,
+        timeout: 100000,
+        success: function (data) {
+            $("#result").text(data.entity);
+            $("#submitForm").prop("disabled", false);
+        }
+    });
+}
+</script>
+
+</body>
+</html>
