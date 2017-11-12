@@ -1,0 +1,1 @@
+Use Maven command line "mvn clean package" to make executable jar file in target folder
